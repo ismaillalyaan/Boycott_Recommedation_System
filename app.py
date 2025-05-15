@@ -65,22 +65,18 @@ if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded Image', use_container_width=True)
 
-        # Convert image to PIL Image and process
         image_array = np.array(image)
         image_pil = Image.fromarray(image_array)
 
-        # Handle color conversion
         if image_array.shape[-1] == 4:
-            image_pil = image_pil.convert("RGB")  # Convert RGBA to RGB
+            image_pil = image_pil.convert("RGB") 
         else:
-            image_pil = image_pil.convert("RGB")  # Ensure RGB
+            image_pil = image_pil.convert("RGB")  
 
-        # Resize to 640x640
         image_pil = image_pil.resize((640, 640), Image.Resampling.LANCZOS)
 
-        # Convert back to numpy array and convert RGB to BGR
         image_array = np.array(image_pil)
-        image_array = image_array[:, :, ::-1]  # Convert RGB to BGR for model compatibility
+        image_array = image_array[:, :, ::-1] 
 
         results = model.predict(image_array, conf=0.25)
 
