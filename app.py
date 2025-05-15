@@ -113,7 +113,7 @@ if uploaded_file is not None:
                     if st.button("Submit", key=f"submit_{idx}") and user_input:
                         st.session_state.reported_products.append(user_input)
                         st.success("Thank you for your contribution. Your input helps us improve our product database.")
-                        pd.DataFrame(st.session_state.reported_products, columns=['product_name']).to_csv('reported_products.csv', index=False)
+                       report_to_airtable(user_input)
         else:
             st.warning("No products were detected in the image. This could be due to image quality, lighting, or the product not being in our database.")
             user_input = st.text_input(
