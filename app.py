@@ -8,7 +8,22 @@ from datetime import datetime
 import sys
 import yaml
 import os
+import requests
 
+def report_to_airtable(product_name):
+    url = 'https://airtable.com/appoGs5iW8duHbfsE/tblbppuGqhkTUc4e8/viwrGn31EeqJjoME2?blocks=hide'
+    headers = {
+        'Authorization': 'patXWtZj4CcvZJSpy.85c123e23605ae92961c7a35787e35295bd385e5ecc00bee9d2c41217dd04977',
+        'Content-Type': 'application/json'
+    }
+    data = {
+        "fields": {
+            "product_name": product_name
+        }
+    }
+    response = requests.post(url, headers=headers, json=data)
+    return response.status_code == 200
+    
 @st.cache_data
 def load_data():
     try:
@@ -108,7 +123,7 @@ if uploaded_file is not None:
             if st.button("Submit", key="submit_no_detection") and user_input:
                 st.session_state.reported_products.append(user_input)
                 st.success("Thank you for your input. Your contribution helps us enhance our product database and improve detection accuracy.")
-                pd.DataFrame(st.session_state.reported_products, columns=['product_name']).to_csv('reported_products.csv', index=False)
+                report_to_airtable(user_input)
 
     except Exception as e:
         st.error(f"An error occurred while processing the image. Please try again or contact support if the issue persists.")
