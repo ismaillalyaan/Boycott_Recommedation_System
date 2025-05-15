@@ -3,7 +3,6 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 from ultralytics import YOLO
-import cv2
 from datetime import datetime
 import sys
 import yaml
@@ -66,9 +65,22 @@ if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded Image', use_container_width=True)
 
+        # Convert image to PIL Image and process
         image_array = np.array(image)
-        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGBA2BGR) if image_array.shape[-1] == 4 else cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
-        image_array = cv2.resize(image_array, (640, 640))
+        image_pil = Image.fromarray(image_array)
+
+        # Handle color conversion
+        if image_array.shape[-1] == 4:
+            image_pil = image_pil.convert("RGB")  # Convert RGBA to RGB
+        else:
+            image_pil = image_pil.convert("RGB")  # Ensure RGB
+
+        # Resize to 640x640
+        image_pil = image_pil.resize((640, 640), Image.Resampling.LANCZOS)
+
+        # Convert back to numpy array and convert RGB to BGR
+        image_array = np.array(image_pil)
+        image_array = image_array[:, :, ::-1]  # Convert RGB to BGR for model compatibility
 
         results = model.predict(image_array, conf=0.25)
 
