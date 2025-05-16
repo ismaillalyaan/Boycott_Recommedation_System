@@ -30,11 +30,11 @@ A Streamlit web application that detects products in uploaded images using **YOL
 ## 📂 Dataset Structure
 
 ### 🛑 Boycott Lists
-- `Boycott.csv`: Raw list of boycotted products (67 items)
+- `Boycott.csv`: Raw list of boycotted products
 - `cleaned_Boycott.csv`: Preprocessed version with simplified product descriptions
 
 ### ✅ Non-Boycott Lists
-- `Non-Boycott.csv`: Raw list of approved products (47 items)
+- `Non-Boycott.csv`: Raw list of approved products
 - `cleaned_Non-Boycott.csv`: Preprocessed ethical alternatives
 
 ---
