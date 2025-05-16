@@ -3,11 +3,14 @@ import pandas as pd
 from PIL import Image
 import numpy as np
 from ultralytics import YOLO
+import cv2
 from datetime import datetime
 import sys
 import yaml
 import os
 
+
+# Load datasets with caching
 @st.cache_data
 def load_data():
     try:
@@ -25,10 +28,11 @@ non_boycott_df, alternatives_df = load_data()
 if non_boycott_df is None or alternatives_df is None:
     st.stop()
 
+# Load YOLO model with caching
 @st.cache_resource
 def load_model():
     try:
-        model = YOLO('best.pt')  
+        model = YOLO('best.pt')  # Replace with your model path
         return model
     except Exception as e:
         st.error(f"Error loading YOLO model: {e}")
@@ -38,6 +42,7 @@ model = load_model()
 if model is None:
     st.stop()
 
+# Load class names from the model or YAML
 class_names = []
 if hasattr(model, 'names'):
     class_names = list(model.names.values()) if isinstance(model.names, dict) else list(model.names)
@@ -50,9 +55,11 @@ else:
         st.stop()
 class_names = [str(name) for name in class_names] or ["Unknown"]
 
+# Initialize session state for reported products
 if 'reported_products' not in st.session_state:
     st.session_state.reported_products = []
 
+# Streamlit app
 st.title("Product Detection and Classification")
 st.header("Upload a Product Image")
 st.write("Upload a JPG or PNG image to detect and classify products.")
@@ -62,24 +69,19 @@ uploaded_file = st.file_uploader("Select an image...", type=["jpg", "png"])
 
 if uploaded_file is not None:
     try:
+        # Display the image
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded Image', use_container_width=True)
 
+        # Preprocess the image for YOLO
         image_array = np.array(image)
-        image_pil = Image.fromarray(image_array)
+        image_array = cv2.cvtColor(image_array, cv2.COLOR_RGBA2BGR) if image_array.shape[-1] == 4 else cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
+        image_array = cv2.resize(image_array, (640, 640))
 
-        if image_array.shape[-1] == 4:
-            image_pil = image_pil.convert("RGB") 
-        else:
-            image_pil = image_pil.convert("RGB")  
-
-        image_pil = image_pil.resize((640, 640), Image.Resampling.LANCZOS)
-
-        image_array = np.array(image_pil)
-        image_array = image_array[:, :, ::-1] 
-
+        # Perform detection with YOLO
         results = model.predict(image_array, conf=0.25)
 
+        # Process detection results
         detected_products = []
         for result in results:
             for box in result.boxes:
