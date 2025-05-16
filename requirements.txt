@@ -1,4 +1,4 @@
 streamlit
-ultralytics
-numpy
+ultralytics==8.0.20
+opencv-python
 Pillow
