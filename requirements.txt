@@ -1,4 +1,4 @@
 streamlit
 ultralytics==8.0.20
-opencv-python
+opencv-python-headless
 Pillow
