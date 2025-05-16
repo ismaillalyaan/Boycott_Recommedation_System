@@ -1,5 +1,5 @@
 streamlit
-ultralytics==8.0.20
-opencv-python
+opencv-python-headless>=4.5.0
+ultralytics>=8.0.0
 Pillow
 torch==2.0.1
