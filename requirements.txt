@@ -3,3 +3,4 @@ ultralytics
 numpy
 Pillow
 gspread
+opencv-pythom-headless
