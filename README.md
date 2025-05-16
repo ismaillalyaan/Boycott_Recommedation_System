@@ -1,7 +1,7 @@
 # 🛑 Product Detection and Boycott Advisory System
 A Streamlit web application that detects products in uploaded images using **YOLOv8** and flags boycotted products based on ethical consumption data. It also suggests non-boycotted alternatives using **semantic similarity** techniques.
 
-🚀 **Live Demo**: [boycottrecsys.streamlit.app](boycottrecommedationsystem.streamlit.app)
+🚀 **Live Demo**: boycottrecommedationsystem.streamlit.app
 
 ---
 
