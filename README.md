@@ -13,6 +13,36 @@ RECSYS is a web-based application that helps users identify whether a product is
 
 ---
 
+### 📋 System Architecture
+```
+RECSYS
+├── pycache
+├── app
+│   ├── about.html
+│   ├── contact.html
+│   ├── index.html
+│   ├── request.html
+│   ├── script.js
+│   ├── styles.css
+│   └── why-boycott.html
+├── backend
+│   ├── app.py
+│   └── requirements.txt
+├── data
+│   ├── preprocess.py
+│   ├── products_addition.csv
+│   └── products.csv
+├── models
+│   └── best.pt
+├── scripts
+│   ├── embed.py
+│   ├── match.py
+│   ├── setup.py
+│   └── update_products.py
+└── System.txt
+```
+---
+
 ### 🛠️ How It Works
 
 #### 1️⃣ Database Setup and Initialization (`setup.py`)
