@@ -1,21 +1,22 @@
-RECSYS
-├── pycache
-├── app
+RECSYS/
+├── app.py
+├── requirements.txt
+├── vercel.json
+├── Procfile
+├── public/
+│   ├── static/
+│   │   ├── styles.css
+│   │   ├── script.js
+│   ├── index.html
 │   ├── about.html
 │   ├── contact.html
-│   ├── index.html
 │   ├── request.html
-│   ├── script.js
-│   ├── styles.css
-│   └── why-boycott.html
-├── backend
-│   ├── app.py
-│   └── requirements.txt
+│   ├── why-boycott.html
+├── models/
+│   ├── best.pt
 ├── data
 │   ├── products_addition.csv
 │   └── products.csv
-├── models
-│   └── best.pt
 ├── scripts
 │   ├── embed.py
 │   ├── match.py
