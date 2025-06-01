@@ -6,11 +6,11 @@
       "use": "@vercel/python"
     },
     {
-      "src": "cert.pem",
+      "src": "static/**/*",
       "use": "@vercel/static"
     },
     {
-      "src": "static/**/*",
+      "src": "cert.pem",
       "use": "@vercel/static"
     }
   ],
@@ -20,8 +20,20 @@
       "dest": "/app.py"
     },
     {
-      "src": "/(.*)",
+      "src": "/static/(.*)",
       "dest": "/static/$1"
+    },
+    {
+      "src": "/(about|contact|request|why-boycott)?",
+      "dest": "/static/$1.html"
+    },
+    {
+      "src": "/",
+      "dest": "/static/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/static/index.html"
     }
   ]
 }
