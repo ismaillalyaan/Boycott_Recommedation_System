@@ -3,40 +3,8 @@
 I’m excited to share my latest project, RECSYS—a recommendation system designed to identify boycotted products and suggest ethical alternatives using machine learning and natural language processing. Below is an overview of the system architecture and how it works. Let me know your thoughts! 👇
 
 ---
-RECSYS Project
-Directory Structure
-Below is the directory structure of the RECSYS project:
-RECSYS
-├── pycache
-├── app
-│   ├── about.html
-│   ├── contact.html
-│   ├── index.html
-│   ├── request.html
-│   ├── script.js
-│   ├── styles.css
-│   └── why-boycott.html
-├── backend
-│   ├── app.py
-│   └── requirements.txt
-├── data
-│   ├── preprocess.py
-│   ├── products_addition.csv
-│   └── products.csv
-├── models
-│   └── best.pt
-├── scripts
-│   ├── embed.py
-│   ├── match.py
-│   ├── setup.py
-│   └── update_products.py
-└── System.txt
-
 
 🚀 **Live Demo**: [boycottrecommedationsystem.streamlit.app](https://boycottrecommedationsystem.streamlit.app/)
-
----
-
 
 ---
 
@@ -56,6 +24,8 @@ RECSYS is a web-based application that helps users identify whether a product is
   - Implements constraints to ensure `boycott_id` references boycotted products and `alt_id` references non-boycotted ones in the `similarities` table.
 - **Key File**: `setup.py`
 
+---
+
 #### 2️⃣ Product Embedding and Clustering (`embed.py`)
 - **Purpose**: Generates embeddings for products and clusters them for better matching.
 - **Process**:
@@ -65,6 +35,8 @@ RECSYS is a web-based application that helps users identify whether a product is
   - Applies K-Means clustering (up to 10 clusters) to group similar products.
   - Stores embeddings and cluster assignments in `product_embeddings` and `product_clusters` tables.
 - **Key File**: `embed.py`
+
+---
 
 #### 3️⃣ Matching Boycotted Products with Alternatives (`match.py`)
 - **Purpose**: Finds non-boycotted alternatives for boycotted products.
@@ -77,6 +49,8 @@ RECSYS is a web-based application that helps users identify whether a product is
   - Stores similarity scores in the `similarities` table for later retrieval.
 - **Key File**: `match.py`
 
+---
+
 #### 4️⃣ Backend API and Image Processing (`app.py`)
 - **Purpose**: Provides API endpoints for the frontend to process images, add products, and search products.
 - **Process**:
@@ -86,6 +60,8 @@ RECSYS is a web-based application that helps users identify whether a product is
   - **Add Product (`/add_product`)**: Allows adding new products to the database (future integration with Microsoft Graph for Excel updates).
   - Returns JSON responses with product details, boycott status, and alternatives.
 - **Key File**: `app.py`
+
+---
 
 #### 5️⃣ Frontend Interface (`index.html`, `script.js`, `styles.css`)
 - **Purpose**: Provides a user-friendly interface to interact with the system.
