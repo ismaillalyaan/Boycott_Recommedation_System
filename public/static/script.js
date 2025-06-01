@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const photoSection = document.getElementById('photoSection');
     const searchSection = document.getElementById('searchSection');
     const photoWarning = document.getElementById('photoWarning');
+    const requestForm = document.getElementById('requestForm');
+    const requestResult = document.getElementById('requestResult');
 
     if (photoButton && searchButton && photoSection && searchSection && photoWarning) {
         window.switchToPhoto = function() {
@@ -192,6 +194,36 @@ document.addEventListener('DOMContentLoaded', function() {
             resultDiv.innerHTML = `خطأ: ${error.message}`;
         }
     }
+
+    window.submitRequest = async function(event) {
+        event.preventDefault();
+        if (!requestForm || !requestResult) return;
+        requestResult.innerHTML = '<div class="spinner"></div>جاري إرسال الطلب...';
+        const name = document.getElementById('productName').value;
+        const category = document.getElementById('category').value;
+
+        if (!name || !category) {
+            requestResult.innerHTML = 'يرجى ملء جميع الحقول.';
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/add_product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, is_boycotted: true, category })
+            });
+
+            if (!response.ok) {
+                throw new Error('خطأ في الاتصال بالخادم');
+            }
+
+            const data = await response.json();
+            requestResult.innerHTML = data.message || 'تم إرسال الطلب بنجاح!';
+        } catch (error) {
+            requestResult.innerHTML = `خطأ: ${error.message}`;
+        }
+    };
 
     const arrowNavLinks = document.querySelectorAll('.arrow-nav a');
     if (arrowNavLinks.length > 0) {

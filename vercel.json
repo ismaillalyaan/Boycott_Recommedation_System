@@ -6,30 +6,22 @@
       "use": "@vercel/python"
     },
     {
-      "src": "public/**",
+      "src": "cert.pem",
       "use": "@vercel/static"
     },
     {
-      "src": "cert.pem",
+      "src": "static/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/public/static/$1"
-    },
-    {
-      "src": "/(index.html|about.html|contact.html|request.html|why-boycott.html)",
-      "dest": "/public/$1"
-    },
     {
       "src": "/api/(.*)",
       "dest": "/app.py"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html"
+      "dest": "/static/$1"
     }
   ]
 }

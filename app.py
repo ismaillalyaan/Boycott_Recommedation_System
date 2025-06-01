@@ -9,15 +9,15 @@ import os
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/process_image": {"origins": "*"}, r"/api/add_product": {"origins": "*"}, r"/api/search_products": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "https://boycott-recommedation-system.vercel.app"}})  # Restricted to your domain
 
-# Database configuration (to be updated with PlanetScale)
+# Database configuration
 db_config = {
     "host": os.getenv("DB_HOST", "127.0.0.1"),
     "user": os.getenv("DB_USER", "root"),
     "password": os.getenv("DB_PASSWORD", "122005"),
     "database": os.getenv("DB_NAME", "recsys"),
-    "ssl_ca": os.getenv("DB_SSL_CA", None)
+    "ssl_ca": os.getenv("DB_SSL_CA", "/cert.pem")
 }
 
 def get_db_connection():
@@ -25,7 +25,7 @@ def get_db_connection():
         return mysql.connector.connect(**db_config)
     except Error as e:
         print(f"Error connecting to database: {e}")
-        raise
+        return None
 
 # Microsoft Graph Config
 TENANT_ID = os.getenv("AZ_TENANT_ID")
@@ -42,12 +42,18 @@ def get_graph_token():
         "client_id": CLIENT_ID,
         "client_secret": CLIENT_SECRET
     }
-    r = requests.post(url, data=payload)
-    r.raise_for_status()
-    return r.json().get("access_token")
+    try:
+        r = requests.post(url, data=payload)
+        r.raise_for_status()
+        return r.json().get("access_token")
+    except Exception as e:
+        print(f"Error getting Graph token: {e}")
+        return None
 
 def add_row_to_excel(product_name, category):
     token = get_graph_token()
+    if not token:
+        return {"error": "Failed to authenticate with Microsoft Graph"}
     endpoint = (
         f"https://graph.microsoft.com/v1.0/me/drive/items/{DRIVE_ITEM_ID}"
         f"/workbook/tables/{TABLE_NAME}/rows/add"
@@ -57,14 +63,19 @@ def add_row_to_excel(product_name, category):
         "Content-Type": "application/json"
     }
     data = {"values": [[product_name, category]]}
-    response = requests.post(endpoint, headers=headers, json=data)
-    response.raise_for_status()
-    return response.json()
+    try:
+        response = requests.post(endpoint, headers=headers, json=data)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error adding row to Excel: {e}")
+        return {"error": str(e)}
 
 @app.route('/api', methods=['GET'])
 def index():
     return jsonify({
-        "message": "Welcome to the RecSys API. Use POST /api/process_image to analyze an image, POST /api/add_product to add a product, or GET /api/search_products for autocomplete search."
+        "message": "Welcome to the RecSys API.",
+        "status": "running"
     })
 
 @app.route('/api/add_product', methods=['POST', 'OPTIONS'])
@@ -75,15 +86,22 @@ def add_product():
         data = request.get_json(force=True)
         name = data.get('name')
         is_boycotted = data.get('is_boycotted', False)
+        category = data.get('category', '')
         if not name:
             return jsonify({"error": "Product 'name' is required"}), 400
         conn = get_db_connection()
+        if not conn:
+            return jsonify({"error": "Database connection failed"}), 500
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO products (name, is_boycotted) VALUES (%s, %s)",
-            (name, is_boycotted)
+            "INSERT INTO products (name, is_boycotted, category) VALUES (%s, %s, %s)",
+            (name, is_boycotted, category)
         )
         conn.commit()
+        if category:
+            excel_result = add_row_to_excel(name, category)
+            if "error" in excel_result:
+                return jsonify({"error": excel_result["error"]}), 500
         return jsonify({"message": "Product added successfully"}), 201
     except Error as e:
         return jsonify({"error": str(e)}), 500
@@ -105,6 +123,8 @@ def search_products():
         if not query:
             return jsonify({"products": []}), 200
         conn = get_db_connection()
+        if not conn:
+            return jsonify({"error": "Database connection failed"}), 500
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
             "SELECT product_id, name, is_boycotted FROM products WHERE name LIKE %s LIMIT 10",
@@ -125,8 +145,17 @@ def search_products():
         cursor.close()
         conn.close()
 
+# Load YOLO model
 try:
-    model = YOLO("models/best.pt")
+    model_path = "models/best.pt"
+    if not os.path.exists(model_path):
+        model_url = os.getenv("YOLO_MODEL_URL")
+        if model_url:
+            r = requests.get(model_url)
+            os.makedirs("models", exist_ok=True)
+            with open(model_path, 'wb') as f:
+                f.write(r.content)
+    model = YOLO(model_path)
 except Exception as e:
     print(f"Error loading YOLO model: {e}")
     exit(1)
@@ -137,6 +166,8 @@ def process_image():
         return '', 200
     try:
         conn = get_db_connection()
+        if not conn:
+            return jsonify({"error": "Database connection failed"}), 500
         cursor = conn.cursor(dictionary=True)
 
         if 'image' in request.files:
@@ -159,7 +190,7 @@ def process_image():
             class_name = data['name']
 
         cursor.execute(
-            "SELECT product_id, name, is_boycotted FROM products WHERE name = %s",
+            "SELECT product_id, name, is_boycotted, category FROM products WHERE name = %s",
             (class_name,)
         )
         product = cursor.fetchone()
@@ -171,10 +202,10 @@ def process_image():
                     SELECT p.name, s.cosine_score
                     FROM similarities s
                     JOIN products p ON s.alt_id = p.product_id
-                    WHERE s.boycott_id = %s
+                    WHERE s.boycott_id = %s AND p.category = %s
                     ORDER BY s.cosine_score DESC
                     LIMIT 5
-                """, (product['product_id'],))
+                """, (product['product_id'], product['category']))
                 alternatives = cursor.fetchall()
             return jsonify({
                 "detected_product": class_name,
