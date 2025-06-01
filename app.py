@@ -7,21 +7,17 @@ import io
 import requests
 import os
 from flask_cors import CORS
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "https://badylk.netlify.app"}})
 
 # Database configuration
 db_config = {
-    "host": os.getenv("DB_HOST", "127.0.0.1"),
-    "user": os.getenv("DB_USER", "root"),
-    "password": os.getenv("DB_PASSWORD", "122005"),
-    "database": os.getenv("DB_NAME", "recsys"),
-    "ssl_ca": os.getenv("DB_SSL_CA", "/cert.pem")
+    "host": "boycott-mysql.mysql.database.azure.com",
+    "user": "mysqladmin",
+    "password": "nourrecsys1_",
+    "database": "recsys",
+    "ssl_ca": "/cert.pem"  # Keep this if SSL is required for Azure MySQL
 }
 
 def get_db_connection():
