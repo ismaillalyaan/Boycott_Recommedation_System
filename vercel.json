@@ -35,6 +35,5 @@
       "src": "/(.*)",
       "dest": "/static/index.html"
     }
-  ],
-
+  ]
 }
