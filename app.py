@@ -153,12 +153,7 @@ def search_products():
 try:
     model_path = "models/best.pt"
     if not os.path.exists(model_path):
-        model_url = os.getenv("YOLO_MODEL_URL")
-        if model_url:
-            r = requests.get(model_url)
-            os.makedirs("models", exist_ok=True)
-            with open(model_path, 'wb') as f:
-                f.write(r.content)
+        raise FileNotFoundError(f"YOLO model not found at {model_path}")
     model = YOLO(model_path)
 except Exception as e:
     print(f"Error loading YOLO model: {e}")

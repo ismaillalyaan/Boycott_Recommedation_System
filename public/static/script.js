@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const statusText = boycotted ? 'مقاطعه' : 'غير مقاطعه';
                 const statusClass = boycotted ? 'boycotted' : 'non-boycotted';
                 resultDiv.innerHTML += `<span class="status-circle ${statusClass}">${statusText}</span>`;
-                if (simData.alternatives && data.alternatives.length > 0) {
+                if (simData.alternatives && simData.alternatives.length > 0) {
                     let html = '<h3>🟢 البدائل المقترحة:</h3><ul>';
                     simData.alternatives.forEach(alt => {
                         html += `<li>${alt.name}</li>`;
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             requestResult.innerHTML = data.message || 'تم إرسال الطلب بنجاح!';
         } catch (error) {
-            requestResult.innerHTML = `خطأ: ${error.message}`;
+            resultDiv.innerHTML = `خطأ: ${error.message}`;
         }
     };
 
