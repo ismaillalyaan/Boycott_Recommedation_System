@@ -1,5 +1,9 @@
-opencv-python-headless>=4.5.0
-ultralytics>=8.0.0
-Pillow
-numpy
-streamlit
+flask
+serverless-wsgi
+ultralytics
+mysql-connector-python
+pillow
+requests
+flask-cors
+python-dotenv
+gunicorn

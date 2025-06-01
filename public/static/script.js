@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('image', file);
 
         try {
-            const response = await fetch('/api/process_image', {
+            const response = await fetch('/.netlify/functions/api/process_image', {
                 method: 'POST',
                 body: formData
             });
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchSuggestions(query) {
         try {
-            const response = await fetch(`/api/search_products?query=${encodeURIComponent(query)}`);
+            const response = await fetch(`/.netlify/functions/api/search_products?query=${encodeURIComponent(query)}`);
             if (!response.ok) {
                 throw new Error('خطأ في جلب الاقتراحات');
             }
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!resultDiv) return;
         resultDiv.innerHTML = '<div class="spinner"></div>جاري البحث عن المنتج...';
         try {
-            const response = await fetch(`/api/search_products?query=${encodeURIComponent(searchInput.value)}`);
+            const response = await fetch(`/.netlify/functions/api/search_products?query=${encodeURIComponent(searchInput.value)}`);
             if (!response.ok) {
                 throw new Error('خطأ في الاتصال بالخادم');
             }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const product = data.products.find(p => p.product_id === productId);
 
             try {
-                const simResponse = await fetch('/api/process_image', {
+                const simResponse = await fetch('/.netlify/functions/api/process_image', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: product.name })
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const statusText = boycotted ? 'مقاطعه' : 'غير مقاطعه';
                 const statusClass = boycotted ? 'boycotted' : 'non-boycotted';
                 resultDiv.innerHTML += `<span class="status-circle ${statusClass}">${statusText}</span>`;
-                if (simData.alternatives && simData.alternatives.length > 0) {
+                if (simData.alternatives && data.alternatives.length > 0) {
                     let html = '<h3>🟢 البدائل المقترحة:</h3><ul>';
                     simData.alternatives.forEach(alt => {
                         html += `<li>${alt.name}</li>`;
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch('/api/add_product', {
+            const response = await fetch('/.netlify/functions/api/add_product', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, is_boycotted: true, category })

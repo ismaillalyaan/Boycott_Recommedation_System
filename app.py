@@ -7,9 +7,13 @@ import io
 import requests
 import os
 from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://boycott-recommedation-system.vercel.app"}})  # Restricted to your domain
+CORS(app, resources={r"/api/*": {"origins": "https://badylk.netlify.app"}})
 
 # Database configuration
 db_config = {
