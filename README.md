@@ -4,7 +4,7 @@ I’m excited to share my latest project, RECSYS—a recommendation system desig
 
 ---
 
-🚀 **Live Demo**: [boycottrecommedationsystem.streamlit.app](https://boycottrecommedationsystem.streamlit.app/)
+🚀 **Live Demo**: 
 
 ---
 
