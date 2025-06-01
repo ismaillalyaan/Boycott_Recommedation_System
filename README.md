@@ -3,9 +3,9 @@
 I’m excited to share my latest project, RECSYS—a recommendation system designed to identify boycotted products and suggest ethical alternatives using machine learning and natural language processing. Below is an overview of the system architecture and how it works. Let me know your thoughts! 👇
 
 ---
-
-### 🏗️ System Architecture
-
+RECSYS Project
+Directory Structure
+Below is the directory structure of the RECSYS project:
 RECSYS
 ├── pycache
 ├── app
@@ -31,6 +31,7 @@ RECSYS
 │   ├── setup.py
 │   └── update_products.py
 └── System.txt
+
 
 🚀 **Live Demo**: [boycottrecommedationsystem.streamlit.app](https://boycottrecommedationsystem.streamlit.app/)
 
