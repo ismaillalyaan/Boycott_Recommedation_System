@@ -1,10 +1,8 @@
-from serverless_wsgi import handle_request
-import sys
-import os
-
-# Add the root directory to sys.path to import app.py
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app import app
+import json
 
 def handler(event, context):
-    return handle_request(app, event, context)
+    return {
+        'statusCode': 200,
+        'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'https://badylk.netlify.app'},
+        'body': json.dumps({"message": "Welcome to the RecSys API.", "status": "running"})
+    }

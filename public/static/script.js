@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // DOM elements
     const input = document.getElementById('productImage');
     const preview = document.getElementById('imagePreview');
     const searchInput = document.getElementById('productSearch');
@@ -12,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const requestForm = document.getElementById('requestForm');
     const requestResult = document.getElementById('requestResult');
 
+    // Base URL for Netlify Functions
+    const BASE_URL = "https://your-netlify-site.netlify.app/.netlify/functions"; // Replace with your actual Netlify domain
+
+    // Switch between photo and search sections
     if (photoButton && searchButton && photoSection && searchSection && photoWarning) {
         window.switchToPhoto = function() {
             photoButton.classList.add('active');
@@ -37,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
+    // Preview image on file input change
     if (input && preview) {
         input.addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -50,9 +56,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Process image (temporary workaround: disable image upload, use name input)
     window.processImage = async function() {
         if (!resultDiv || !input) return;
         resultDiv.innerHTML = '<div class="spinner"></div>جاري معالجة الصورة...';
+
+        // Temporarily disable image upload due to Netlify Functions limitation
+        resultDiv.innerHTML = 'عذراً، تحميل الصور غير مدعوم حالياً. يرجى استخدام البحث النصي أو إرسال طلب لإضافة المنتج.';
+        return;
+
+        // Uncomment this block if deploying to a platform that supports image uploads (e.g., Vercel)
+        /*
         if (!input.files || !input.files[0]) {
             resultDiv.innerHTML = 'يرجى تحميل صورة أولاً.';
             return;
@@ -63,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('image', file);
 
         try {
-            const response = await fetch('/.netlify/functions/api/process_image', {
+            const response = await fetch(`${BASE_URL}/process_image`, {
                 method: 'POST',
                 body: formData
             });
@@ -94,24 +108,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultDiv.innerHTML += html;
             }
         } catch (error) {
+            console.error('Error processing image:', error);
             resultDiv.innerHTML = `خطأ: ${error.message}`;
         }
+        */
     };
 
+    // Fetch product suggestions for autocomplete
     async function fetchSuggestions(query) {
         try {
-            const response = await fetch(`/.netlify/functions/api/search_products?query=${encodeURIComponent(query)}`);
+            const response = await fetch(`${BASE_URL}/search_products?query=${encodeURIComponent(query)}`);
             if (!response.ok) {
                 throw new Error('خطأ في جلب الاقتراحات');
             }
             const data = await response.json();
-            return data.products;
+            return data.products || [];
         } catch (error) {
             console.error('Error fetching suggestions:', error);
             return [];
         }
     }
 
+    // Autocomplete for search input
     if (searchInput && autocompleteList) {
         searchInput.addEventListener('input', async function(e) {
             const query = e.target.value.trim();
@@ -138,11 +156,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Search for a product by ID
     async function searchProduct(productId) {
         if (!resultDiv) return;
         resultDiv.innerHTML = '<div class="spinner"></div>جاري البحث عن المنتج...';
         try {
-            const response = await fetch(`/.netlify/functions/api/search_products?query=${encodeURIComponent(searchInput.value)}`);
+            const response = await fetch(`${BASE_URL}/search_products?query=${encodeURIComponent(searchInput.value)}`);
             if (!response.ok) {
                 throw new Error('خطأ في الاتصال بالخادم');
             }
@@ -156,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const product = data.products.find(p => p.product_id === productId);
 
             try {
-                const simResponse = await fetch('/.netlify/functions/api/process_image', {
+                const simResponse = await fetch(`${BASE_URL}/process_image`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: product.name })
@@ -188,13 +207,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     resultDiv.innerHTML += html;
                 }
             } catch (error) {
+                console.error('Error fetching alternatives:', error);
                 resultDiv.innerHTML += `<p>خطأ في جلب البدائل: ${error.message}</p>`;
             }
         } catch (error) {
+            console.error('Error searching product:', error);
             resultDiv.innerHTML = `خطأ: ${error.message}`;
         }
     }
 
+    // Submit a product request
     window.submitRequest = async function(event) {
         event.preventDefault();
         if (!requestForm || !requestResult) return;
@@ -208,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch('/.netlify/functions/api/add_product', {
+            const response = await fetch(`${BASE_URL}/add_product`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, is_boycotted: true, category })
@@ -221,10 +243,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             requestResult.innerHTML = data.message || 'تم إرسال الطلب بنجاح!';
         } catch (error) {
-            resultDiv.innerHTML = `خطأ: ${error.message}`;
+            console.error('Error submitting request:', error);
+            requestResult.innerHTML = `خطأ: ${error.message}`;
         }
     };
 
+    // Navigation animation for arrow links
     const arrowNavLinks = document.querySelectorAll('.arrow-nav a');
     if (arrowNavLinks.length > 0) {
         arrowNavLinks.forEach(link => {

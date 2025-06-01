@@ -1,14 +1,14 @@
 [build]
-  command = "pip install -r requirements.txt"
+  command = """
+    pip install -r requirements.txt &&
+    mkdir -p /tmp/models &&
+    cp models/best.pt /tmp/models/ &&
+    cp cert.pem /tmp/  # Copy cert.pem if SSL is required
+  """
   publish = "public"
   functions = "functions"
 
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
-  status = 200
-  force = true
-
+# Redirects for static site routing
 [[redirects]]
   from = "/static/*"
   to = "/static/:splat"
@@ -44,9 +44,21 @@
   to = "/index.html"
   status = 200
 
+# Function configuration
 [functions]
   directory = "functions"
-  node_bundler = "esbuild"
+  # Note: node_bundler = "esbuild" is for Node.js; Python functions don't need this
 
+# Build environment settings
 [build.environment]
-  PYTHON_VERSION = "3.8"
+  PYTHON_VERSION = "3.10"  # Ensure this matches your development environment
+  AZ_TENANT_ID = "your-tenant-id"  # Add these as examples; set in Netlify dashboard instead
+  AZ_CLIENT_ID = "your-client-id"
+  AZ_CLIENT_SECRET = "your-client-secret"
+  ONEDRIVE_FILE_ID = "your-drive-item-id"
+  EXCEL_TABLE_NAME = "ProductsTable"
+
+# Optional: Add these to [dev] for local testing with Netlify CLI
+[dev]
+  command = "netlify dev"
+  port = 8888

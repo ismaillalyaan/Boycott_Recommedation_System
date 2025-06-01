@@ -1,25 +1,26 @@
-RECSYS/
-├── app.py
-├── requirements.txt
-├── vercel.json
-├── Procfile
+project-root/
+├── functions/
+│   ├── api.py
+│   ├── add_product.py
+│   ├── search_products.py
+│   ├── process_image.py
+├── models/
+│   └── best.pt
 ├── public/
 │   ├── static/
-│   │   ├── styles.css
 │   │   ├── script.js
-│   ├── index.html
+│   │   └── style.css
 │   ├── about.html
 │   ├── contact.html
+│   ├── index.html
 │   ├── request.html
-│   ├── why-boycott.html
-├── models/
-│   ├── best.pt
-├── data
-│   ├── products_addition.csv
-│   └── products.csv
-├── scripts
+│   └── why-boycott.html
+├── scripts/
 │   ├── embed.py
 │   ├── match.py
 │   ├── setup.py
-│   └── update_products.py
-└── System.txt
+│   ├── update_products.py
+│   └── migrate_to_azure.py  
+├── cert.pem                
+├── requirements.txt
+├── netlify.toml
