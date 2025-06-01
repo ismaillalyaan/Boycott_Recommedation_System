@@ -1,0 +1,52 @@
+[build]
+  command = "pip install -r requirements.txt"
+  publish = "public/static"
+  functions = "functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/static/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/static/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/request"
+  to = "/static/request.html"
+  status = 200
+
+[[redirects]]
+  from = "/why-boycott"
+  to = "/static/why-boycott.html"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/static/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/static/index.html"
+  status = 200
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+[build.environment]
+  PYTHON_VERSION = "3.8"

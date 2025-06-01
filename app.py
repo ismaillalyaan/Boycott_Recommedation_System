@@ -9,7 +9,7 @@ import os
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://boycott-recommedation-system.vercel.app"}})
+CORS(app, resources={r"/api/*": {"origins": "https://boycott-recommedation-system.vercel.app"}})  # Restricted to your domain
 
 # Database configuration
 db_config = {
@@ -151,21 +151,10 @@ try:
     if not os.path.exists(model_path):
         model_url = os.getenv("YOLO_MODEL_URL")
         if model_url:
-            session = requests.Session()
-            response = session.get(model_url, stream=True, allow_redirects=True)
-            response.raise_for_status()
-            # Handle Google Drive confirmation page
-            if "download_warning" in response.url or "confirm" in response.url:
-                for cookie in session.cookies:
-                    if cookie.name == "download_warning":
-                        params = {"id": "1bGtc5yQRlFabtz5ioAVUBBXOzHiiTKLV", "confirm": cookie.value}
-                        response = session.get(model_url, params=params, stream=True)
-                        break
+            r = requests.get(model_url)
             os.makedirs("models", exist_ok=True)
             with open(model_path, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    if chunk:
-                        f.write(chunk)
+                f.write(r.content)
     model = YOLO(model_path)
 except Exception as e:
     print(f"Error loading YOLO model: {e}")
