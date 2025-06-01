@@ -120,23 +120,6 @@ RECSYS
 
 ---
 
-### 🚀 How to Run
-1. **Setup Environment**:
-   - Install dependencies from `requirements.txt`.
-   - Ensure MySQL is running and the `recsys` database is created.
-2. **Initialize Database**:
-   - Run `python scripts/setup.py` to create tables and load data from `data/products.csv`.
-3. **Generate Embeddings and Clusters**:
-   - Run `python scripts/embed.py` to create product embeddings and clusters.
-4. **Match Products**:
-   - Run `python scripts/match.py` to compute similarities and store alternatives.
-5. **Start the Server**:
-   - Run `python backend/app.py` to start the Flask server (default: `http://localhost:5000`).
-6. **Access the App**:
-   - Open `app/index.html` in a browser or navigate to the server URL to use the app.
-
----
-
 ### 📈 Future Improvements
 - Integrate Microsoft Graph to update product data in Excel.
 - Enhance image recognition accuracy with a larger YOLO dataset.
