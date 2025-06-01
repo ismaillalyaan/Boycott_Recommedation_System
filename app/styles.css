@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    direction: rtl;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+header {
+    background: #000;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 50% 20px;
+    border-bottom-right-radius: 50% 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav a {
+    color: white;
+    margin: 0 1rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #ffeb3b;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    text-align: center;
+}
+
+.upload-section {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.upload-section h2 {
+    color: #6b48ff;
+    margin-bottom: 1.5rem;
+}
+
+.detection-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.detection-button {
+    background: #6b48ff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.detection-button:hover {
+    background: #ff6f61;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.detection-button.active {
+    background: #ff6f61;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.warning {
+    color: #ff0000;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    display: none;
+}
+
+.input-section {
+    margin-top: 1rem;
+}
+
+input[type="file"], input[type="text"], select {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem;
+    border: 2px solid #6b48ff;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.autocomplete-list {
+    background: #fff;
+    border: 1px solid #6b48ff;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-item {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.autocomplete-item:hover {
+    background: #f0f0f0;
+}
+
+.preview-image {
+    max-width: 300px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    transition: transform 0.3s;
+}
+
+.preview-image:hover {
+    transform: scale(1.05);
+}
+
+button {
+    background: #ff6f61;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #6b48ff;
+}
+
+.result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #000;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.status-circle {
+    display: inline-block;
+    margin: 0 0.5rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.boycotted {
+    background-color: #ff0000;
+}
+
+.non-boycotted {
+    background-color: #008000;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #6b48ff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+footer {
+    background: #008000;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+}
+
+.arrow-nav {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 300px;
+    height: calc(100vh - 120px);
+    background: #ff0000;
+    z-index: 2001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    clip-path: polygon(0 0, 95% 50%, 0 100%);
+    transition: transform 0.8s ease-out;
+}
+
+.arrow-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transform: rotate(-90deg);
+    text-align: center;
+}
+
+.arrow-nav li {
+    margin: 1rem 0;
+}
+
+.arrow-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.arrow-nav a:hover {
+    color: #ffeb3b;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.5); }
+}
+
+@keyframes fly {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        transform: translateX(100vw) rotate(360deg);
+    }
+}
+
+.arrow-nav.fly {
+    animation: fly 0.8s ease-out forwards;
+}
+
+.red-expand {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background: #ff0000;
+    z-index: 1999;
+    transition: width 0.8s ease-out;
+}
+
+.red-expand.expand {
+    animation: expand 0.8s ease-out forwards;
+}
+
+@keyframes expand {
+    0% { width: 0; }
+    100% { width: 100vw; }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.overlay.active {
+    opacity: 1;
+}
+
+.overlay-message {
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+    transform: scale(0.5);
+    transition: transform 0.5s ease-in-out;
+    z-index: 2000;
+}
+
+.overlay.active .overlay-message {
+    transform: scale(1);
+}
+
+.overlay.slide-right {
+    animation: slideRight 0.5s ease-out forwards;
+}
+
+@keyframes slideRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(100vw); }
+}
+
+@media (max-width: 768px) {
+    .arrow-nav {
+        width: 200px;
+        top: 60px;
+        height: calc(100vh - 100px);
+    }
+    .arrow-nav a {
+        font-size: 1.2rem;
+    }
+    .detection-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .detection-button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    .autocomplete-list {
+        width: 100%;
+    }
+    header h1 {
+        font-size: 1.5rem;
+    }
+    .overlay-message {
+        font-size: 2rem;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

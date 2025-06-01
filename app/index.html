@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بديلك</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>بديلك</h1>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="about.html">حول</a>
+            <a href="contact.html">اتصل بنا</a>
+            <a href="request.html">إرسال طلب لإضافة منتج</a>
+        </nav>
+    </header>
+
+    <div class="arrow-nav">
+        <ul>
+            <li><a href="why-boycott.html">لماذا تقاطع؟</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <div class="upload-section">
+            <h2>اختر طريقة التعرف على المنتج</h2>
+            <div class="detection-buttons">
+                <button id="photoButton" class="detection-button" onclick="switchToPhoto()">التعرف بالصورة</button>
+                <button id="searchButton" class="detection-button" onclick="switchToSearch()">التعرف بالبحث</button>
+            </div>
+            <div id="photoWarning" class="warning" style="display: none;">⚠️ تحت التطوير والاختبار</div>
+            <div id="photoSection" class="input-section" style="display: none;">
+                <input type="file" id="productImage" accept="image/*">
+                <div id="imagePreview"></div>
+                <button onclick="processImage()">معالجة الصورة</button>
+            </div>
+            <div id="searchSection" class="input-section" style="display: none;">
+                <input type="text" id="productSearch" placeholder="ابحث عن منتج">
+                <div id="autocompleteList" class="autocomplete-list"></div>
+            </div>
+            <div id="result" class="result"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 نظام ترشيح بدائل للمنتجات المقاطعة</p>
+    </footer>
+</body>
+</html>

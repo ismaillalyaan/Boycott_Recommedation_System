@@ -1,0 +1,24 @@
+RECSYS
+├── pycache
+├── app
+│   ├── about.html
+│   ├── contact.html
+│   ├── index.html
+│   ├── request.html
+│   ├── script.js
+│   ├── styles.css
+│   └── why-boycott.html
+├── backend
+│   ├── app.py
+│   └── requirements.txt
+├── data
+│   ├── products_addition.csv
+│   └── products.csv
+├── models
+│   └── best.pt
+├── scripts
+│   ├── embed.py
+│   ├── match.py
+│   ├── setup.py
+│   └── update_products.py
+└── System.txt
