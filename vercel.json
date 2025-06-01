@@ -36,7 +36,5 @@
       "dest": "/static/index.html"
     }
   ],
-  "ignore": [
-    "models/**/*"
-  ]
+
 }
