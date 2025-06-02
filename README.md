@@ -116,7 +116,4 @@ boycott_recommendation_system
 ### Technologies Used
 - **Backend**: Flask, MySQL, YOLO (Ultralytics), Sentence Transformers, NLTK, scikit-learn
 - **Frontend**: HTML, CSS, JavaScript
-- **Data**: pandas, CSV files
-- **Others**: Microsoft Graph (for future Excel integration)
-
----
+- **Deployment**: Microsoft Azure
