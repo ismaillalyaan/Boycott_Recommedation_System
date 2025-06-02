@@ -8,12 +8,12 @@ RECSYS—a recommendation system designed to identify boycotted products and sug
 
 ---
 
-### 📋 Project Overview
+### Project Overview
 RECSYS is a web-based application that helps users identify whether a product is boycotted and suggests non-boycotted alternatives. It combines a Flask backend, a MySQL database, and a frontend built with HTML, CSS, and JavaScript. The system leverages machine learning for product detection (via YOLO) and embeddings (via Sentence Transformers) to recommend alternatives based on similarity.
 
 ---
 
-### 📋 System Architecture
+### System Architecture
 ```
 boycott_recommendation_system
 ├── backend
