@@ -1,15 +1,10 @@
 project-root/
-├── functions/
-│   ├── api.py
-│   ├── add_product.py
-│   ├── search_products.py
-│   ├── process_image.py
+├── app.py
 ├── models/
 │   └── best.pt
-├── public/
-│   ├── static/
-│   │   ├── script.js
-│   │   └── style.css
+├── static/
+│   ├── script.js
+│   ├── style.css
 │   ├── about.html
 │   ├── contact.html
 │   ├── index.html
@@ -18,9 +13,5 @@ project-root/
 ├── scripts/
 │   ├── embed.py
 │   ├── match.py
-│   ├── setup.py
-│   ├── update_products.py
-│   └── migrate_to_azure.py  
-├── cert.pem                
+│   ├── setup.py            
 ├── requirements.txt
-├── netlify.toml
