@@ -11,10 +11,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Database configuration
 db_config = {
-    "host": "127.0.0.1",
-    "user": "root",
-    "password": "122005",
-    "database": "recsys"
+    "host": "DB_HOST",
+    "user": "DB_USER",
+    "password": "DB_PASS",
+    "database": "DB_NAME"
 }
 
 def get_db_connection():
