@@ -1,19 +1,26 @@
-project-root/
-├── backend/
-│   ├── app.py
-├── models/
+boycott_recommendation_system
+├── backend
+│   └── app.py
+├── data
+│   ├── preprocess.py
+│   ├── products_addition.csv
+│   └── products.csv
+├── models
 │   └── best.pt
-├── static/
-│   ├── script.js
-│   ├── style.css
+├── scripts
+│   ├── embed.py
+│   ├── match.py
+│   ├── setup.py
+│   └── update_products.py
+├── static
 │   ├── about.html
 │   ├── contact.html
 │   ├── index.html
 │   ├── request.html
+│   ├── script.js
+│   ├── styles.css
 │   └── why-boycott.html
-├── scripts/
-│   ├── embed.py
-│   ├── match.py
-│   ├── setup.py            
+├── Dockerfile
+├── README.md
 ├── requirements.txt
-├── DockerFile
+└── System.txt 
