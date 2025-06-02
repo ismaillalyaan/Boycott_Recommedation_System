@@ -1,10 +1,10 @@
-**RECSYS - A Product Recommendation System for Boycott Alternatives** 🚫🌟
+**RECSYS - A Product Recommendation System for Boycott Alternatives** 
 
-RECSYS—a recommendation system designed to identify boycotted products and suggest ethical alternatives using machine learning and natural language processing. Below is an overview of the system architecture and how it works. Let me know your thoughts! 👇
+RECSYS—a recommendation system designed to identify boycotted products and suggest ethical alternatives using machine learning , natural language processing and computer vision. Below is an overview of the system architecture and how it works. 
 
 ---
 
-🚀 **Live Demo**: [badylk.com](https://badeelk-bkhdhudqbcbwchca.southafricanorth-01.azurewebsites.net/index.html) 
+ **Prototype**: [badylk.com](https://badeelk-bkhdhudqbcbwchca.southafricanorth-01.azurewebsites.net/index.html) 
 
 ---
 
@@ -15,19 +15,9 @@ RECSYS is a web-based application that helps users identify whether a product is
 
 ### 📋 System Architecture
 ```
-RECSYS
-├── pycache
-├── app
-│   ├── about.html
-│   ├── contact.html
-│   ├── index.html
-│   ├── request.html
-│   ├── script.js
-│   ├── styles.css
-│   └── why-boycott.html
+boycott_recommendation_system
 ├── backend
-│   ├── app.py
-│   └── requirements.txt
+│   └── app.py
 ├── data
 │   ├── preprocess.py
 │   ├── products_addition.csv
@@ -39,11 +29,22 @@ RECSYS
 │   ├── match.py
 │   ├── setup.py
 │   └── update_products.py
-└── System.txt
+├── static
+│   ├── about.html
+│   ├── contact.html
+│   ├── index.html
+│   ├── request.html
+│   ├── script.js
+│   ├── styles.css
+│   └── why-boycott.html
+├── Dockerfile
+├── README.md
+├── requirements.txt
+└── System.txt 
 ```
 ---
 
-### 🛠️ How It Works
+### How It Works
 
 #### 1️⃣ Database Setup and Initialization (`setup.py`)
 - **Purpose**: Sets up the MySQL database and populates it with product data.
@@ -103,7 +104,7 @@ RECSYS
 
 ---
 
-### 🌟 Key Features
+### Key Features
 - **Image Recognition**: Detects products in images using YOLO.
 - **NLP-Powered Matching**: Uses Sentence Transformers and TF-IDF for semantic and keyword-based similarity.
 - **Clustering**: Groups similar products with K-Means for efficient matching.
@@ -112,20 +113,10 @@ RECSYS
 
 ---
 
-### 🛠️ Technologies Used
+### Technologies Used
 - **Backend**: Flask, MySQL, YOLO (Ultralytics), Sentence Transformers, NLTK, scikit-learn
 - **Frontend**: HTML, CSS, JavaScript
 - **Data**: pandas, CSV files
 - **Others**: Microsoft Graph (for future Excel integration)
 
 ---
-
-### 📈 Future Improvements
-- Integrate Microsoft Graph to update product data in Excel.
-- Enhance image recognition accuracy with a larger YOLO dataset.
-- Add user authentication and product submission moderation.
-- Improve matching with more advanced NLP models.
-
----
-
-I’d love to hear your feedback or collaborate on enhancing this project! Let’s connect. 💬 #MachineLearning #NLP #WebDevelopment #EthicalTech
