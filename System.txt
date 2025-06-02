@@ -1,5 +1,6 @@
 project-root/
-├── app.py
+├── backend/
+│   ├── app.py
 ├── models/
 │   └── best.pt
 ├── static/
