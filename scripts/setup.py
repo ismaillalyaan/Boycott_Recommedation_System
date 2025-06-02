@@ -23,10 +23,10 @@ except Exception as e:
 
 try:
     conn = mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="122005",
-        database="recsys"
+        host="DB_HOST",
+        user="DB_USER",
+        password="DB_PASS",
+        database="DB_NAME"
     )
     cursor = conn.cursor()
 except Error as e:
