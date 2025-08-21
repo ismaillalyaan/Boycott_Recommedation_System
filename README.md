@@ -1,4 +1,4 @@
-**RECSYS - A Product Recommendation System for Boycott Alternatives** 
+# **RECSYS - A Product Recommendation System for Boycott Alternatives**
 
 RECSYS—a recommendation system designed to identify boycotted products and suggest ethical alternatives using machine learning , natural language processing and computer vision. Below is an overview of the system architecture and how it works. 
 
